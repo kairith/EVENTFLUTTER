@@ -22,7 +22,7 @@ class TrendingEventCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
-          image: NetworkImage(imageUrl),
+          image: AssetImage(imageUrl), // Changed from NetworkImage to AssetImage
           fit: BoxFit.cover,
         ),
       ),
@@ -56,7 +56,7 @@ class TrendingEventCard extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                     padding: const EdgeInsets.symmetric(vertical: 4),
-                    minimumSize: const Size(40, 20),
+                    minimumSize: const Size(60, 30),
                   ),
                   child: Text(buttonText),
                 ),

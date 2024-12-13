@@ -98,10 +98,11 @@ class HomePage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 children: const [
                   TrendingEventCard(
-                    imageUrl: "https://via.placeholder.com/150",
+                    imageUrl: "assets/images/people-excellence.png",
                     title: "Business Party",
                     location: "Mesa, New Jersey",
                     buttonText: "Join",
+                    
                   ),
                   TrendingEventCard(
                     imageUrl: "https://via.placeholder.com/150",
