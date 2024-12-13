@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'EventCard.dart';
+import 'TrendingEventCard.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -66,7 +68,6 @@ class HomePage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 children: const [
                   EventCard(
-                    
                     imageUrl: "assets/images/National-Live-Creative-Day.jpg",
                     title: "National Creativity",
                     location: "California, USA",
@@ -78,7 +79,6 @@ class HomePage extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // Trending Events Section
             // Trending Events Section
             SectionHeader(title: "Trending Events", onViewAll: () {}),
             const SizedBox(height: 10),
@@ -162,141 +162,6 @@ class SectionHeader extends StatelessWidget {
         ),
         TextButton(onPressed: onViewAll, child: const Text("View All")),
       ],
-    );
-  }
-}
-
-class EventCard extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String location;
-  final String buttonText;
-
-  const EventCard({
-    required this.imageUrl,
-    required this.title,
-    required this.location,
-    required this.buttonText,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 16),
-      width: 300,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        image: DecorationImage(
-          image: NetworkImage(imageUrl),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            bottom: 16,
-            left: 16,
-            right: 16,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    shadows: [Shadow(blurRadius: 8)],
-                  ),
-                ),
-                Text(
-                  location,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                  ),
-                  child: Text(buttonText),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class TrendingEventCard extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String location;
-  final String buttonText;
-
-  const TrendingEventCard({
-    required this.imageUrl,
-    required this.title,
-    required this.location,
-    required this.buttonText,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 16),
-      width: 150,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        image: DecorationImage(
-          image: NetworkImage(imageUrl),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            bottom: 8,
-            left: 8,
-            right: 8,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  location,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    minimumSize: const Size(40, 20),
-                  ),
-                  child: Text(buttonText),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
