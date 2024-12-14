@@ -22,7 +22,7 @@ class TrendingEventCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
-          image: AssetImage(imageUrl), // Changed from NetworkImage to AssetImage
+          image: AssetImage(imageUrl), 
           fit: BoxFit.cover,
         ),
       ),

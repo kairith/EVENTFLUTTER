@@ -102,6 +102,9 @@ class HomePage extends StatelessWidget {
                     title: "Business Party",
                     location: "Mesa, New Jersey",
                     buttonText: "Join",
+                    // view the tect file and the image tof the code for card event 
+                    // the event can book bash on the location name of the organization date compare to the booked event of the form 
+                    // the event can also be viewed by the user by clicking on the event card
                     
                   ),
                   TrendingEventCard(

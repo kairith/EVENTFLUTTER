@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
   void signUserIn(BuildContext context) {
     // Sample credentials for validation
     const correctUsername = "admin";
-    const correctPassword = "password123";
+    const correctPassword = "rith1122*";
 
     if (usernameController.text == correctUsername &&
         passwordController.text == correctPassword) {
@@ -29,7 +29,6 @@ class LoginPage extends StatelessWidget {
         ),
       );
     } else {
-      
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Invalid username or password. Please try again."),
@@ -53,8 +52,7 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 50),
-
-                // logo
+                
                 Image.asset(
                   "assets/images/flutterlogo.png",
                   width: 80,
@@ -152,7 +150,6 @@ class LoginPage extends StatelessWidget {
                     SquareTile(imagePath: 'assets/images/google.png'),
 
                     SizedBox(width: 25),
-
                     // apple button
                     SquareTile(imagePath: 'assets/images/apple.png'),
                   ],
