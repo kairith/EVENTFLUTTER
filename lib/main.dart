@@ -1,3 +1,4 @@
+// import 'package:eventmanagementsystem/components/CustomBottomNavigationBar.dart';
 import 'package:eventmanagementsystem/pages/get_start.dart';
 import 'package:flutter/material.dart';
 // import 'pages/login_page.dart';

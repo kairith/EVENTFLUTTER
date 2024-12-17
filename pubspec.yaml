@@ -68,8 +68,12 @@ flutter:
     - assets/images/event-logo.svg
     - assets/images/National-Live-Creative-Day.jpg
     - assets/images/people-excellence.png
+    - assets/images/MF4-Music-Festival-in-Cambodia.jpg
+    - assets/images/techno.jpg
+    - assets/images/food.jpg
+    - assets/images/art.jpg
 
-
+    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

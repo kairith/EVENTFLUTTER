@@ -1,7 +1,8 @@
+import 'package:eventmanagementsystem/components/CustomBottomNavigationBar.dart';
 import 'package:eventmanagementsystem/components/my_button.dart';
 import 'package:eventmanagementsystem/components/my_textfield.dart';
 import 'package:eventmanagementsystem/components/square_tile.dart';
-import 'package:eventmanagementsystem/pages/home_page.dart';
+// import 'package:eventmanagementsystem/pages/home_page.dart';
 import 'package:flutter/material.dart';
 // Ensure you import your HomePage here
 
@@ -25,7 +26,7 @@ class LoginPage extends StatelessWidget {
         context,
         MaterialPageRoute(
           
-          builder: (context) => const HomePage(),
+          builder: (context) => const CustomBottomNavigationBar(),
         ),
       );
     } else {
@@ -59,7 +60,6 @@ class LoginPage extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 50),
-
                 // Top message
                 Text(
                   'Login Page Event Management System',

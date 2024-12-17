@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'EventCard.dart';
 import 'TrendingEventCard.dart';
-
+// import 'package:eventmanagementsystem/components/CustomBottomNavigationBar.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -102,31 +102,30 @@ class HomePage extends StatelessWidget {
                     title: "Business Party",
                     location: "Mesa, New Jersey",
                     buttonText: "Join",
-                    // view the tect file and the image tof the code for card event 
-                    // the event can book bash on the location name of the organization date compare to the booked event of the form 
+                    // view the tect file and the image tof the code for card event
+                    // the event can book bash on the location name of the organization date compare to the booked event of the form
                     // the event can also be viewed by the user by clicking on the event card
-                    
                   ),
                   TrendingEventCard(
-                    imageUrl: "https://via.placeholder.com/150",
+                    imageUrl: "assets/images/MF4-Music-Festival-in-Cambodia.jpg",
                     title: "Music Festival",
                     location: "Shiloh, Hawaii",
                     buttonText: "Join",
                   ),
                   TrendingEventCard(
-                    imageUrl: "https://via.placeholder.com/150",
+                    imageUrl: "assets/images/techno.jpg",
                     title: "Tech Meetup",
                     location: "Silicon Valley, California",
                     buttonText: "Join",
                   ),
                   TrendingEventCard(
-                    imageUrl: "https://via.placeholder.com/150",
+                    imageUrl: "assets/images/food.jpg",
                     title: "Food Carnival",
                     location: "Austin, Texas",
                     buttonText: "Join",
                   ),
                   TrendingEventCard(
-                    imageUrl: "https://via.placeholder.com/150",
+                    imageUrl: "assets/images/art.jpg",
                     title: "Art Exhibition",
                     location: "Paris, France",
                     buttonText: "Join",
@@ -139,9 +138,74 @@ class HomePage extends StatelessWidget {
 
             // Popular Events Section
             SectionHeader(title: "Popular Events", onViewAll: () {}),
+            // Add this part after Popular Events section
+            const SizedBox(height: 10),
+
+// Popular Events List
+            ListView.builder(
+              shrinkWrap: true,
+              physics:
+                  NeverScrollableScrollPhysics(), // Prevent inner scrolling
+                 itemCount: 3, // Replace with dynamic data later
+                 itemBuilder: (context, index) {
+                // Event data for illustration (hardcoded here, use dynamic data as needed)
+                final events = [
+                  {
+                    "title": "Robot Events",
+                    "date": "25 July, 02:00 pm",
+                    "price": "\$25.33"
+                  },
+                  {
+                    "title": "Corporate Event",
+                    "date": "27 July, 08:00 pm",
+                    "price": "\$23.53"
+                  },
+                  {
+                    "title": "Game of the year",
+                    "date": "29 July, 02:00 pm",
+                    "price": "\$28.99"
+                  },
+                ];
+
+                final event = events[index];
+
+                return Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      radius: 24,
+                      backgroundImage:
+                          AssetImage("assets/images/MF4-Music-Festival-in-Cambodia.jpg"),
+                    ),
+                    title: Text(
+                      event['title']!,
+                      style:
+                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    subtitle: Text(event['date']!),
+                    trailing: Text(
+                      event['price']!,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.teal,
+                        fontSize: 14,
+                      ),
+                    ),
+                    onTap: () {
+                      // Navigate to event details or show more info
+                      print("Tapped on ${event['title']}");
+                    },
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 16), // Padding after Popular Events
           ],
         ),
       ),
+      //  bottomNavigationBar: CustomBottomNavigationBar(),
     );
   }
 }
@@ -150,7 +214,7 @@ class SectionHeader extends StatelessWidget {
   final String title;
   final VoidCallback onViewAll;
 
-  const SectionHeader({required this.title, required this.onViewAll});
+  const SectionHeader({super.key, required this.title, required this.onViewAll});
 
   @override
   Widget build(BuildContext context) {
@@ -167,5 +231,6 @@ class SectionHeader extends StatelessWidget {
         TextButton(onPressed: onViewAll, child: const Text("View All")),
       ],
     );
+    
   }
 }
