@@ -1,3 +1,4 @@
+import 'package:eventmanagementsystem/pages/create.dart';
 import 'package:flutter/material.dart';
 import 'package:eventmanagementsystem/pages/home_page.dart';
 import 'package:eventmanagementsystem/pages/notification.dart';
@@ -17,15 +18,18 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   final List<Widget> _pages = [
     const HomePage(),
     const NotificationsPage(),
-    const Center(child: Text("Create Event Page")), // Replace with real pages
-    const Center(child: Text("History Page")), // Replace with real pages
-    const Center(child: Text("Profile Page")), // Replace with real pages
+    // const CreateEventPage(), // Create Event Page
+    const Center(child: Text("History Page")),
+    const Center(child: Text("Profile Page")),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex], // Switches between pages
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -45,12 +49,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: "Setting",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: "Create",
+            icon: Icon(Icons.notifications),
+            label: "Notifications",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),

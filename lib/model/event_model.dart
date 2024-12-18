@@ -1,37 +1,37 @@
 class Event {
-  final String id;
+  final int? id; // For SQFlite (optional)
   final String title;
-  final String description;
-  final DateTime date;
   final String location;
-  final int availability;
+  final String date;
+  final String price;
 
   Event({
-    required this.id,
+    this.id,
     required this.title,
-    required this.description,
-    required this.date,
     required this.location,
-    required this.availability,
+    required this.date,
+    required this.price, required String description,
   });
 
-  factory Event.fromJson(Map<String, dynamic> json) {
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'location': location,
+      'date': date,
+      'price': price,
+    };
+  }
+
+  factory Event.fromMap(Map<String, dynamic> map) {
     return Event(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
-      date: DateTime.parse(json['date']),
-      location: json['location'],
-      availability: json['availability'],
+      id: map['id'],
+      title: map['title'],
+      location: map['location'],
+      date: map['date'],
+      price: map['price'], description: '',
     );
   }
 
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'title': title,
-    'description': description,
-    'date': date.toIso8601String(),
-    'location': location,
-    'availability': availability,
-  };
+  String? get description => null;
 }
