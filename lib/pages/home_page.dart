@@ -53,10 +53,8 @@ class _HomePageState extends State<HomePage> {
       return titleLower.contains(queryLower) || locationLower.contains(queryLower);
     }).toList();
   }
-
   @override
   Widget build(BuildContext context) {
-    // Create a filtered list based on the search query
     List<Map<String, String>> filteredEvents = _filterEvents(searchController.text);
 
     return Scaffold(

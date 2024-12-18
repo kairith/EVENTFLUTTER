@@ -1,5 +1,5 @@
-import 'package:eventmanagementsystem/pages/EventCard.dart';
 import 'package:flutter/material.dart';
+import 'ViewAllEventsPage.dart'; // Import your ViewAllEventsPage file
 
 class EventCategoryPage extends StatelessWidget {
   final String title;
@@ -17,19 +17,51 @@ class EventCategoryPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: events.isEmpty
-          ? Center(child: Text("No events available"))
-          : ListView(
-              padding: EdgeInsets.all(8.0),
-              children: events.map((event) {
-                return EventCard(
-                  imageUrl: event['imageUrl']!,
-                  title: event['title']!,
-                  location: event['location']!,
-                  buttonText: "Book Now", // Change based on category
-                );
-              }).toList(),
+      body: Column(
+        children: [
+          if (events.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    // Navigate to ViewAllEventsPage
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ViewAllEventsPage(
+                          category: title,
+                          events: events,
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text(""),
+                ),
+              ),
             ),
+          Expanded(
+            child: events.isEmpty
+                ? const Center(child: Text("No events available"))
+                : ListView(
+                    padding: const EdgeInsets.all(8.0),
+                    children: events.map((event) {
+                      return Card(
+                        child: ListTile(
+                          title: Text(event['title'] ?? "Untitled Event"),
+                          subtitle: Text(event['location'] ?? ""),
+                          trailing: const Text("Book Now"),
+                          onTap: () {
+                            // Navigate or perform action for event
+                          },
+                        ),
+                      );
+                    }).toList(),
+                  ),
+          ),
+        ],
+      ),
     );
   }
 }
