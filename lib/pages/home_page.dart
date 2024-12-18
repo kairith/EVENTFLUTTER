@@ -301,19 +301,41 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final newEvent = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const CreateEventPage()),
-          );
-          if (newEvent != null) {
-            // Handle adding the new event if necessary
-          }
-        },
-        child: const Icon(Icons.add),
-        tooltip: 'Add New Event',
-        backgroundColor: Colors.blue,
-      ),
+  onPressed: () async {
+    final newEvent = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const CreateEventPage()),
+    );
+    if (newEvent != null) {
+      // Add the new event to the Featured, Trending, or Popular list based on its category
+      setState(() {
+        if (newEvent['category'] == 'Featured') {
+          featuredEvents.add({
+            "title": newEvent['title']!,
+            "location": newEvent['location']!,
+            "imageUrl": newEvent['imageUrl']!,
+          });
+        } else if (newEvent['category'] == 'Trending') {
+          trendingEvents.add({
+            "title": newEvent['title']!,
+            "location": newEvent['location']!,
+            "imageUrl": newEvent['imageUrl']!,
+          });
+        } else if (newEvent['category'] == 'Popular') {
+          popularEvents.add({
+            "title": newEvent['title']!,
+            "location": newEvent['location']!,
+            "imageUrl": newEvent['imageUrl']!,
+          });
+        }
+      });
+    }
+  },
+  child: const Icon(Icons.add),
+  tooltip: 'Add New Event',
+  backgroundColor: Colors.blue,
+),
+
     );
   }
 }
