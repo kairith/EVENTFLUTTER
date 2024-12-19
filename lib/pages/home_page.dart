@@ -50,12 +50,15 @@ class _HomePageState extends State<HomePage> {
       final titleLower = event["title"]!.toLowerCase();
       final locationLower = event["location"]!.toLowerCase();
       final queryLower = query.toLowerCase();
-      return titleLower.contains(queryLower) || locationLower.contains(queryLower);
+      return titleLower.contains(queryLower) ||
+          locationLower.contains(queryLower);
     }).toList();
   }
+
   @override
   Widget build(BuildContext context) {
-    List<Map<String, String>> filteredEvents = _filterEvents(searchController.text);
+    List<Map<String, String>> filteredEvents =
+        _filterEvents(searchController.text);
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -112,7 +115,7 @@ class _HomePageState extends State<HomePage> {
             ),
 
             const SizedBox(height: 16),
-           
+
             // Display filtered events if any
             if (filteredEvents.isNotEmpty) ...[
               // Featured Events Section
@@ -142,7 +145,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ] else ...[
               // If no events found
-              Text(
+              const Text(
                 "No events found",
                 style: TextStyle(fontSize: 18, color: Colors.grey),
               ),
@@ -299,41 +302,40 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-  onPressed: () async {
-    final newEvent = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CreateEventPage()),
-    );
-    if (newEvent != null) {
-      // Add the new event to the Featured, Trending, or Popular list based on its category
-      setState(() {
-        if (newEvent['category'] == 'Featured') {
-          featuredEvents.add({
-            "title": newEvent['title']!,
-            "location": newEvent['location']!,
-            "imageUrl": newEvent['imageUrl']!,
-          });
-        } else if (newEvent['category'] == 'Trending') {
-          trendingEvents.add({
-            "title": newEvent['title']!,
-            "location": newEvent['location']!,
-            "imageUrl": newEvent['imageUrl']!,
-          });
-        } else if (newEvent['category'] == 'Popular') {
-          popularEvents.add({
-            "title": newEvent['title']!,
-            "location": newEvent['location']!,
-            "imageUrl": newEvent['imageUrl']!,
-          });
-        }
-      });
-    }
-  },
-  child: const Icon(Icons.add),
-  tooltip: 'Add New Event',
-  backgroundColor: Colors.blue,
-),
-
+        onPressed: () async {
+          final newEvent = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CreateEventPage()),
+          );
+          if (newEvent != null) {
+            // Add the new event to the Featured, Trending, or Popular list based on its category
+            setState(() {
+              if (newEvent['category'] == 'Featured') {
+                featuredEvents.add({
+                  "title": newEvent['title']!,
+                  "location": newEvent['location']!,
+                  "imageUrl": newEvent['imageUrl']!,
+                });
+              } else if (newEvent['category'] == 'Trending') {
+                trendingEvents.add({
+                  "title": newEvent['title']!,
+                  "location": newEvent['location']!,
+                  "imageUrl": newEvent['imageUrl']!,
+                });
+              } else if (newEvent['category'] == 'Popular') {
+                popularEvents.add({
+                  "title": newEvent['title']!,
+                  "location": newEvent['location']!,
+                  "imageUrl": newEvent['imageUrl']!,
+                });
+              }
+            });
+          }
+        },
+        tooltip: 'Add New Event',
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

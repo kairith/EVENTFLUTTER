@@ -41,9 +41,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
     "assets/images/techno.jpg",
     "assets/images/food.jpg",
   ];
-
   final List<EventCategory> categories = EventCategory.values;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
