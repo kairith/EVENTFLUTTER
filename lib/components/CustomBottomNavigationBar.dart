@@ -1,4 +1,5 @@
-import 'package:eventmanagementsystem/pages/create.dart';
+import 'package:eventmanagementsystem/pages/History.dart';
+import 'package:eventmanagementsystem/pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:eventmanagementsystem/pages/home_page.dart';
 import 'package:eventmanagementsystem/pages/notification.dart';
@@ -18,9 +19,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   final List<Widget> _pages = [
     const HomePage(),
     const NotificationsPage(),
-    // const CreateEventPage(), // Create Event Page
-    const Center(child: Text("History Page")),
-    const Center(child: Text("Profile Page")),
+    const HistoryPage(),
+    const ProfilePage(),
   ];
 
   @override
