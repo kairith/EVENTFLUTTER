@@ -5,12 +5,14 @@ class EventCard extends StatelessWidget {
   final String title;
   final String location;
   final String buttonText;
+  final VoidCallback onPressed; // Added callback for button action
 
   const EventCard({
     required this.imageUrl,
     required this.title,
     required this.location,
     required this.buttonText,
+    required this.onPressed, // Made onPressed a required parameter
     super.key,
   });
 
@@ -22,7 +24,7 @@ class EventCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
-          image: AssetImage(imageUrl), // Changed from NetworkImage to AssetImage
+          image: AssetImage(imageUrl), // Using AssetImage for local images
           fit: BoxFit.cover,
         ),
       ),
@@ -53,7 +55,7 @@ class EventCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: onPressed, // Use the dynamic callback
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                   ),

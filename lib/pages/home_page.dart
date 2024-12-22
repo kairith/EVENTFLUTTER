@@ -1,4 +1,5 @@
 import 'package:eventmanagementsystem/pages/EventCategoryPage.dart';
+import 'package:eventmanagementsystem/pages/booking_page.dart';
 import 'package:flutter/material.dart';
 import 'create.dart'; // Import the page to create events
 import 'SectionHeader.dart'; // Import the SectionHeader widget
@@ -55,7 +56,8 @@ class _HomePageState extends State<HomePage> {
       final titleLower = event["title"]!.toLowerCase();
       final locationLower = event["location"]!.toLowerCase();
       final queryLower = query.toLowerCase();
-      return titleLower.contains(queryLower) || locationLower.contains(queryLower);
+      return titleLower.contains(queryLower) ||
+          locationLower.contains(queryLower);
     }).toList();
   }
 
@@ -76,17 +78,20 @@ class _HomePageState extends State<HomePage> {
   void updateEvent(String category, Map<String, String> updatedEvent) {
     setState(() {
       if (category == 'Featured') {
-        final index = featuredEvents.indexWhere((event) => event['id'] == updatedEvent['id']);
+        final index = featuredEvents
+            .indexWhere((event) => event['id'] == updatedEvent['id']);
         if (index != -1) {
           featuredEvents[index] = updatedEvent;
         }
       } else if (category == 'Trending') {
-        final index = trendingEvents.indexWhere((event) => event['id'] == updatedEvent['id']);
+        final index = trendingEvents
+            .indexWhere((event) => event['id'] == updatedEvent['id']);
         if (index != -1) {
           trendingEvents[index] = updatedEvent;
         }
       } else if (category == 'Popular') {
-        final index = popularEvents.indexWhere((event) => event['id'] == updatedEvent['id']);
+        final index = popularEvents
+            .indexWhere((event) => event['id'] == updatedEvent['id']);
         if (index != -1) {
           popularEvents[index] = updatedEvent;
         }
@@ -96,7 +101,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, String>> filteredEvents = _filterEvents(searchController.text);
+    List<Map<String, String>> filteredEvents =
+        _filterEvents(searchController.text);
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -174,7 +180,8 @@ class _HomePageState extends State<HomePage> {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: const Text("Delete Event"),
-                              content: const Text("Do you want to delete this event?"),
+                              content: const Text(
+                                  "Do you want to delete this event?"),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
@@ -201,7 +208,8 @@ class _HomePageState extends State<HomePage> {
                             builder: (context) => UpdateEventPage(
                               eventDetails: event,
                               onUpdate: (updatedEvent) {
-                                updateEvent('Featured', updatedEvent); // Update the correct category
+                                updateEvent('Featured',
+                                    updatedEvent); // Update the correct category
                               },
                             ),
                           ),
@@ -214,7 +222,25 @@ class _HomePageState extends State<HomePage> {
                           imageUrl: event['imageUrl']!,
                           title: event['title']!,
                           location: event['location']!,
-                          buttonText: "Book Now",
+                          buttonText: 'Book Now',
+                          onPressed: () {
+                            if ('Book Now' == 'Book Now') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const BookingPage(
+                                    event: {
+                                      'title': 'Music Festival',
+                                      'location': 'Central Park',
+                                    },
+                                  ),
+                                ),
+                              );
+                            } else if ('Learn More' == 'Learn More') {
+                              print('Learn More action triggered');
+                              // Navigate to an event details page if needed
+                            }
+                          },
                         ),
                       ),
                     );
@@ -258,7 +284,8 @@ class _HomePageState extends State<HomePage> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: const Text("Delete Event"),
-                            content: const Text("Do you want to delete this event?"),
+                            content:
+                                const Text("Do you want to delete this event?"),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
@@ -299,6 +326,24 @@ class _HomePageState extends State<HomePage> {
                         title: event['title']!,
                         location: event['location']!,
                         buttonText: "Book Now",
+                        onPressed: () {
+                            if ('Book Now' == 'Book Now') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const BookingPage(
+                                    event: {
+                                      'title': 'Music Festival',
+                                      'location': 'Central Park',
+                                    },
+                                  ),
+                                ),
+                              );
+                            } else if ('Learn More' == 'Learn More') {
+                              print('Learn More action triggered');
+                              // Navigate to an event details page if needed
+                            }
+                          },
                       ),
                     ),
                   );
@@ -335,7 +380,8 @@ class _HomePageState extends State<HomePage> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: const Text("Delete Event"),
-                            content: const Text("Do you want to delete this event?"),
+                            content:
+                                const Text("Do you want to delete this event?"),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
@@ -376,6 +422,24 @@ class _HomePageState extends State<HomePage> {
                         title: event['title']!,
                         location: event['location']!,
                         buttonText: "Join",
+                        onPressed: () {
+                            if ('Join' == 'Join') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const BookingPage(
+                                    event: {
+                                      'title': 'Music Festival',
+                                      'location': 'Central Park',
+                                    },
+                                  ),
+                                ),
+                              );
+                            } else if ('Learn More' == 'Learn More') {
+                              print('Learn More action triggered');
+                              // Navigate to an event details page if needed
+                            }
+                          },
                       ),
                     ),
                   );
@@ -413,7 +477,8 @@ class _HomePageState extends State<HomePage> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: const Text("Delete Event"),
-                            content: const Text("Do you want to delete this event?"),
+                            content:
+                                const Text("Do you want to delete this event?"),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
@@ -453,7 +518,25 @@ class _HomePageState extends State<HomePage> {
                         imageUrl: event['imageUrl']!,
                         title: event['title']!,
                         location: event['location']!,
-                        buttonText: "Join",
+                        buttonText: "explore",
+                        onPressed: () {
+                            if ('explore' == 'explore') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const BookingPage(
+                                    event: {
+                                      'title': 'Music Festival',
+                                      'location': 'Central Park',
+                                    },
+                                  ),
+                                ),
+                              );
+                            } else if ('Learn More' == 'Learn More') {
+                              print('Learn More action triggered');
+                              // Navigate to an event details page if needed
+                            }
+                          },
                       ),
                     ),
                   );
@@ -474,7 +557,9 @@ class _HomePageState extends State<HomePage> {
             setState(() {
               if (newEvent['category'] == 'Featured') {
                 featuredEvents.add({
-                  "id": DateTime.now().millisecondsSinceEpoch.toString(), // Generate a new ID
+                  "id": DateTime.now()
+                      .millisecondsSinceEpoch
+                      .toString(), // Generate a new ID
                   "title": newEvent['title']!,
                   "location": newEvent['location']!,
                   "imageUrl": newEvent['imageUrl']!,
