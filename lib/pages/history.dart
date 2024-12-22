@@ -11,27 +11,35 @@ class HistoryPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Booking History'),
       ),
-      body: ListView.builder(
-        itemCount: bookings.length,
-        itemBuilder: (context, index) {
-          final booking = bookings[index];
-          final event = booking['event'];
-
-          return Card(
-            margin: const EdgeInsets.all(8.0),
-            child: ListTile(
-              title: Text(event['title']),
-              subtitle: Text('Tickets: ${booking['ticketCount']}'),
-              trailing: IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () {
-                  // Optionally, you can implement event deletion here
-                },
+      body: bookings.isEmpty
+          ? const Center(
+              child: Text(
+                'No bookings yet!',
+                style: TextStyle(fontSize: 18),
               ),
+            )
+          : ListView.builder(
+              itemCount: bookings.length,
+              itemBuilder: (context, index) {
+                final booking = bookings[index];
+                final event = booking['event'] as Map<String, String>;
+                return Card(
+                  margin: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                    title: Text(event['title'] ?? 'Unknown Event'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Location: ${event['location']}'),
+                        Text('Name: ${booking['name']}'),
+                        Text('Email: ${booking['email']}'),
+                        Text('Tickets: ${booking['ticketCount']}'),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }

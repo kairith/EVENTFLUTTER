@@ -1,6 +1,6 @@
 import 'package:eventmanagementsystem/pages/History.dart';
 import 'package:flutter/material.dart';
-
+import 'package:eventmanagementsystem/pages/home_page.dart';
 class BookingPage extends StatefulWidget {
   final Map<String, String> event;
 
@@ -17,26 +17,27 @@ class _BookingPageState extends State<BookingPage> {
   int _ticketCount = 1;
 
   void _confirmBooking() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      
-      // Save the booking details (This can be done through a backend or local state)
-      final bookingDetails = {
-        'event': widget.event,
-        'name': _name,
-        'email': _email,
-        'ticketCount': _ticketCount,
-      };
+  if (_formKey.currentState!.validate()) {
+    _formKey.currentState!.save();
 
-      // Navigate to the HistoryPage and pass the booking details
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HistoryPage(bookings: [bookingDetails]),
-        ),
-      );
-    }
+    // Save the booking details
+    final bookingDetails = {
+      'event': widget.event,
+      'name': _name,
+      'email': _email,
+      'ticketCount': _ticketCount,
+    };
+
+    // Navigate to HistoryPage with the booking details
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HistoryPage(bookings: [bookingDetails]),
+      ),
+    );
   }
+}
+
 
   @override
   Widget build(BuildContext context) {

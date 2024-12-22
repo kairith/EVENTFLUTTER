@@ -27,6 +27,7 @@ class _UpdateEventPageState extends State<UpdateEventPage> {
     "assets/images/food.jpg",
     "assets/images/AUPP-Home.jpg",
     "assets/images/CADT_location.jpg",
+    "assets/images/Art.jpg",
   ];
 
   @override

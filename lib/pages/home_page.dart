@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
       "id": "4",
       "title": "Art Exhibition",
       "location": "Paris, France",
-      "imageUrl": "assets/images/art.jpg",
+      "imageUrl": "assets/images/Art.jpg",
     },
   ];
 
@@ -233,6 +233,7 @@ class _HomePageState extends State<HomePage> {
                                       'title': 'Music Festival',
                                       'location': 'Central Park',
                                     },
+                                    
                                   ),
                                 ),
                               );
