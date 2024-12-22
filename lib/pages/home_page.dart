@@ -3,7 +3,7 @@ import 'package:eventmanagementsystem/pages/booking_page.dart';
 import 'package:flutter/material.dart';
 import 'create.dart'; // Import the page to create events
 import 'SectionHeader.dart'; // Import the SectionHeader widget
-import 'EventCard.dart'; // Import the EventCard widget
+import '../model/EventCard.dart'; // Import the EventCard widget
 import 'UpdateEvent.dart';
 
 class HomePage extends StatefulWidget {

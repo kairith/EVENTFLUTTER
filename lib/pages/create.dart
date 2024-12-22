@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:eventmanagementsystem/pages/create.dart';
 import 'package:eventmanagementsystem/model/event_model.dart'; // Import the enum
 import 'home_page.dart';
+import 'package:image_picker/image_picker.dart';
+
 enum EventCategory { Featured, Trending, Popular }
 
 extension EventCategoryExtension on EventCategory {

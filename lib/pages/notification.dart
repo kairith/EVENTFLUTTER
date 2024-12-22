@@ -19,6 +19,16 @@ class _NotificationsPageState extends State<NotificationsPage> {
     });
   }
 
+  void reorderNotifications(int oldIndex, int newIndex) {
+    setState(() {
+      if (newIndex > oldIndex) {
+        newIndex--;
+      }
+      final notification = notifications.removeAt(oldIndex);
+      notifications.insert(newIndex, notification);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,12 +53,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             )
-          : ListView.builder(
+          : ReorderableListView.builder(
               itemCount: notifications.length,
+              onReorder: reorderNotifications,
               itemBuilder: (context, index) {
                 final notification = notifications[index];
                 return Dismissible(
-                  key: Key(notification["title"]!), // Unique key for each notification
+                  key: Key(notification["title"]!),
                   direction: DismissDirection.endToStart,
                   background: Container(
                     alignment: Alignment.centerRight,
@@ -57,7 +68,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     child: const Icon(Icons.delete, color: Colors.white),
                   ),
                   onDismissed: (direction) {
-                    deleteNotification(index); // Delete the notification
+                    deleteNotification(index);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text("Notification deleted."),

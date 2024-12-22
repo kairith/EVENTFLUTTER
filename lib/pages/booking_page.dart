@@ -1,3 +1,4 @@
+import 'package:eventmanagementsystem/components/CustomBottomNavigationBar.dart';
 import 'package:eventmanagementsystem/pages/History.dart';
 import 'package:flutter/material.dart';
 import 'package:eventmanagementsystem/pages/home_page.dart';
@@ -32,7 +33,7 @@ class _BookingPageState extends State<BookingPage> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => HistoryPage(bookings: [bookingDetails]),
+        builder: (context) => CustomBottomNavigationBar(),
       ),
     );
   }
