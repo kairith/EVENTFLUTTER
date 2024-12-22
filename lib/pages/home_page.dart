@@ -75,25 +75,28 @@ class _HomePageState extends State<HomePage> {
 
   // Method to update the event
   void updateEvent(String category, Map<String, String> updatedEvent) {
-  setState(() {
-    if (category == 'Featured') {
-      final index = featuredEvents.indexWhere((event) => event['id'] == updatedEvent['id']);
-      if (index != -1) {
-        featuredEvents[index] = updatedEvent;
+    setState(() {
+      if (category == 'Featured') {
+        final index = featuredEvents
+            .indexWhere((event) => event['id'] == updatedEvent['id']);
+        if (index != -1) {
+          featuredEvents[index] = updatedEvent;
+        }
+      } else if (category == 'Trending') {
+        final index = trendingEvents
+            .indexWhere((event) => event['id'] == updatedEvent['id']);
+        if (index != -1) {
+          trendingEvents[index] = updatedEvent;
+        }
+      } else if (category == 'Popular') {
+        final index = popularEvents
+            .indexWhere((event) => event['id'] == updatedEvent['id']);
+        if (index != -1) {
+          popularEvents[index] = updatedEvent;
+        }
       }
-    } else if (category == 'Trending') {
-      final index = trendingEvents.indexWhere((event) => event['id'] == updatedEvent['id']);
-      if (index != -1) {
-        trendingEvents[index] = updatedEvent;
-      }
-    } else if (category == 'Popular') {
-      final index = popularEvents.indexWhere((event) => event['id'] == updatedEvent['id']);
-      if (index != -1) {
-        popularEvents[index] = updatedEvent;
-      }
-    }
-  });
-}
+    });
+  }
 
   // Method to show confirmation dialog for event deletion
   void showDeleteConfirmation(String category, Map<String, String> event) {
@@ -202,18 +205,19 @@ class _HomePageState extends State<HomePage> {
                         showDeleteConfirmation('Featured', event);
                       },
                       onTap: () async {
-  final updatedEvent = await Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => UpdateEventPage(
-        eventDetails: event,
-        onUpdate: (updatedEvent) {
-          updateEvent('Featured', updatedEvent); // Update the correct category
-        },
-      ),
-    ),
-  );
-},
+                        final updatedEvent = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UpdateEventPage(
+                              eventDetails: event,
+                              onUpdate: (updatedEvent) {
+                                updateEvent('Featured',
+                                    updatedEvent); // Update the correct category
+                              },
+                            ),
+                          ),
+                        );
+                      },
                       child: Container(
                         margin: const EdgeInsets.only(right: 16.0),
                         width: 250,
@@ -369,7 +373,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 10),
             // Popular events container
             SizedBox(
-              height: 220,
+              height: 150,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: popularEvents.map((event) {
@@ -407,6 +411,42 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+        
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final newEvent = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CreateEventPage()),
+          );
+          if (newEvent != null) {
+            // Add the new event to the Featured, Trending, or Popular list based on its category
+            setState(() {
+              if (newEvent['category'] == 'Featured') {
+                featuredEvents.add({
+                  "title": newEvent['title']!,
+                  "location": newEvent['location']!,
+                  "imageUrl": newEvent['imageUrl']!,
+                });
+              } else if (newEvent['category'] == 'Trending') {
+                trendingEvents.add({
+                  "title": newEvent['title']!,
+                  "location": newEvent['location']!,
+                  "imageUrl": newEvent['imageUrl']!,
+                });
+              } else if (newEvent['category'] == 'Popular') {
+                popularEvents.add({
+                  "title": newEvent['title']!,
+                  "location": newEvent['location']!,
+                  "imageUrl": newEvent['imageUrl']!,
+                });
+              }
+            });
+          }
+        },
+        tooltip: 'Add New Event',
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.add),
       ),
     );
   }
