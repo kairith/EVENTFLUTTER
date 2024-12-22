@@ -29,7 +29,6 @@ class _UpdateEventPageState extends State<UpdateEventPage> {
     "assets/images/CADT_location.jpg",
     "assets/images/Art.jpg",
   ];
-
   @override
   void initState() {
     super.initState();

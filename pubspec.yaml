@@ -71,10 +71,10 @@ flutter:
     - assets/images/MF4-Music-Festival-in-Cambodia.jpg
     - assets/images/techno.jpg
     - assets/images/food.jpg
-    - assets/images/Art.jpg
     - assets/images/Userprofile.jpg
     - assets/images/CADT_location.jpg
     - assets/images/AUPP-Home.jpg
+    - assets/images/Art.jpg
 
     
   # An image asset can refer to one or more resolution-specific "variants", see

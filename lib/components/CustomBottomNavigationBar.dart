@@ -18,7 +18,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   // List of pages
   final List<Widget> _pages = [
     const HomePage(),
-    const NotificationsPage(),
+    NotificationsPage(),
     const HistoryPage(bookings: [
       
     ],),
