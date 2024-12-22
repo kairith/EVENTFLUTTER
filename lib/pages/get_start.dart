@@ -18,7 +18,7 @@ class Getstart extends StatelessWidget {
               width: 350,
             ), // Updated line
             const SizedBox(height: 20),
-            const Text("Booking the Event...",
+            const Text("Create your Event...",
                 style: TextStyle(fontSize: 20, fontStyle: FontStyle.normal)),
             const SizedBox(height: 100),
             ElevatedButton(
