@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   // Event categories
   List<Map<String, String>> featuredEvents = [
     {
-      "id": "1",
+      "id": "1", // Added ID for event identification
       "title": "National Creativity",
       "location": "California, USA",
       "imageUrl": "assets/images/National-Live-Creative-Day.jpg",
@@ -55,8 +55,7 @@ class _HomePageState extends State<HomePage> {
       final titleLower = event["title"]!.toLowerCase();
       final locationLower = event["location"]!.toLowerCase();
       final queryLower = query.toLowerCase();
-      return titleLower.contains(queryLower) ||
-          locationLower.contains(queryLower);
+      return titleLower.contains(queryLower) || locationLower.contains(queryLower);
     }).toList();
   }
 
@@ -73,24 +72,21 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // Method to update the event
+  // Function to handle event update
   void updateEvent(String category, Map<String, String> updatedEvent) {
     setState(() {
       if (category == 'Featured') {
-        final index = featuredEvents
-            .indexWhere((event) => event['id'] == updatedEvent['id']);
+        final index = featuredEvents.indexWhere((event) => event['id'] == updatedEvent['id']);
         if (index != -1) {
           featuredEvents[index] = updatedEvent;
         }
       } else if (category == 'Trending') {
-        final index = trendingEvents
-            .indexWhere((event) => event['id'] == updatedEvent['id']);
+        final index = trendingEvents.indexWhere((event) => event['id'] == updatedEvent['id']);
         if (index != -1) {
           trendingEvents[index] = updatedEvent;
         }
       } else if (category == 'Popular') {
-        final index = popularEvents
-            .indexWhere((event) => event['id'] == updatedEvent['id']);
+        final index = popularEvents.indexWhere((event) => event['id'] == updatedEvent['id']);
         if (index != -1) {
           popularEvents[index] = updatedEvent;
         }
@@ -98,36 +94,9 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // Method to show confirmation dialog for event deletion
-  void showDeleteConfirmation(String category, Map<String, String> event) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Delete Event'),
-        content: const Text('Are you sure you want to delete this event?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              deleteEvent(category, event);
-              Navigator.pop(context); // Close the dialog
-            },
-            child: const Text('Yes'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Close the dialog
-            },
-            child: const Text('No'),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    List<Map<String, String>> filteredEvents =
-        _filterEvents(searchController.text);
+    List<Map<String, String>> filteredEvents = _filterEvents(searchController.text);
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -187,22 +156,43 @@ class _HomePageState extends State<HomePage> {
 
             // Display filtered events if any
             if (filteredEvents.isNotEmpty) ...[
-              // Featured Events Section
               SectionHeader(
                 title: "Search Results",
                 onViewAll: () {},
               ),
               const SizedBox(height: 10),
-              // Events container
               SizedBox(
-                height: 220, // Adjust height to fit the cards
+                height: 220,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: filteredEvents.map((event) {
                     return GestureDetector(
                       onLongPress: () {
-                        // Show delete confirmation dialog on long press
-                        showDeleteConfirmation('Featured', event);
+                        // Show delete confirmation dialog
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Delete Event"),
+                              content: const Text("Do you want to delete this event?"),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Cancel"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    deleteEvent('Featured', event);
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Delete"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       onTap: () async {
                         final updatedEvent = await Navigator.push(
@@ -211,8 +201,7 @@ class _HomePageState extends State<HomePage> {
                             builder: (context) => UpdateEventPage(
                               eventDetails: event,
                               onUpdate: (updatedEvent) {
-                                updateEvent('Featured',
-                                    updatedEvent); // Update the correct category
+                                updateEvent('Featured', updatedEvent); // Update the correct category
                               },
                             ),
                           ),
@@ -233,7 +222,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ] else ...[
-              // If no events found
               const Text(
                 "No events found",
                 style: TextStyle(fontSize: 18, color: Colors.grey),
@@ -258,7 +246,6 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             const SizedBox(height: 10),
-            // Featured events container
             SizedBox(
               height: 220,
               child: ListView(
@@ -266,8 +253,30 @@ class _HomePageState extends State<HomePage> {
                 children: featuredEvents.map((event) {
                   return GestureDetector(
                     onLongPress: () {
-                      // Show delete confirmation dialog on long press
-                      showDeleteConfirmation('Featured', event);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Delete Event"),
+                            content: const Text("Do you want to delete this event?"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Cancel"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  deleteEvent('Featured', event);
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Delete"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     onTap: () async {
                       final updatedEvent = await Navigator.push(
@@ -314,7 +323,6 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             const SizedBox(height: 10),
-            // Trending events container
             SizedBox(
               height: 150,
               child: ListView(
@@ -322,8 +330,30 @@ class _HomePageState extends State<HomePage> {
                 children: trendingEvents.map((event) {
                   return GestureDetector(
                     onLongPress: () {
-                      // Show delete confirmation dialog on long press
-                      showDeleteConfirmation('Trending', event);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Delete Event"),
+                            content: const Text("Do you want to delete this event?"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Cancel"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  deleteEvent('Trending', event);
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Delete"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     onTap: () async {
                       final updatedEvent = await Navigator.push(
@@ -371,7 +401,6 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             const SizedBox(height: 10),
-            // Popular events container
             SizedBox(
               height: 150,
               child: ListView(
@@ -379,8 +408,30 @@ class _HomePageState extends State<HomePage> {
                 children: popularEvents.map((event) {
                   return GestureDetector(
                     onLongPress: () {
-                      // Show delete confirmation dialog on long press
-                      showDeleteConfirmation('Popular', event);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Delete Event"),
+                            content: const Text("Do you want to delete this event?"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Cancel"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  deleteEvent('Popular', event);
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Delete"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     onTap: () async {
                       final updatedEvent = await Navigator.push(
@@ -411,7 +462,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -424,18 +474,21 @@ class _HomePageState extends State<HomePage> {
             setState(() {
               if (newEvent['category'] == 'Featured') {
                 featuredEvents.add({
+                  "id": DateTime.now().millisecondsSinceEpoch.toString(), // Generate a new ID
                   "title": newEvent['title']!,
                   "location": newEvent['location']!,
                   "imageUrl": newEvent['imageUrl']!,
                 });
               } else if (newEvent['category'] == 'Trending') {
                 trendingEvents.add({
+                  "id": DateTime.now().millisecondsSinceEpoch.toString(),
                   "title": newEvent['title']!,
                   "location": newEvent['location']!,
                   "imageUrl": newEvent['imageUrl']!,
                 });
               } else if (newEvent['category'] == 'Popular') {
                 popularEvents.add({
+                  "id": DateTime.now().millisecondsSinceEpoch.toString(),
                   "title": newEvent['title']!,
                   "location": newEvent['location']!,
                   "imageUrl": newEvent['imageUrl']!,

@@ -20,14 +20,11 @@ class _UpdateEventPageState extends State<UpdateEventPage> {
   late TextEditingController imageUrlController;
 
   @override
-
   void initState() {
     super.initState();
     titleController = TextEditingController(text: widget.eventDetails['title']);
-    locationController =
-        TextEditingController(text: widget.eventDetails['location']);
-    imageUrlController =
-        TextEditingController(text: widget.eventDetails['imageUrl']);
+    locationController = TextEditingController(text: widget.eventDetails['location']);
+    imageUrlController = TextEditingController(text: widget.eventDetails['imageUrl']);
   }
 
   @override
@@ -56,12 +53,14 @@ class _UpdateEventPageState extends State<UpdateEventPage> {
             ElevatedButton(
               onPressed: () {
                 final updatedEvent = {
+                  "id": widget.eventDetails['id']!, // Ensure this is non-null
                   "title": titleController.text,
                   "location": locationController.text,
                   "imageUrl": imageUrlController.text,
                 };
-                widget.onUpdate(updatedEvent);
-                Navigator.pop(context);
+
+                widget.onUpdate(updatedEvent); // Call the update function
+                Navigator.pop(context); // Close the page
               },
               child: const Text("Update Event"),
             ),
