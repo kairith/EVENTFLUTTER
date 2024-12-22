@@ -40,6 +40,9 @@ class _CreateEventPageState extends State<CreateEventPage> {
     "assets/images/MF4-Music-Festival-in-Cambodia.jpg",
     "assets/images/techno.jpg",
     "assets/images/food.jpg",
+    "assets/images/AUPP-Home.jpg",
+    "assets/images/CADT_location.jpg"
+    
   ];
   final List<EventCategory> categories = EventCategory.values;
   @override

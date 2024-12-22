@@ -73,6 +73,8 @@ flutter:
     - assets/images/food.jpg
     - assets/images/art.jpg
     - assets/images/Userprofile.jpg
+    - assets/images/CADT_location.jpg
+    - assets/images/AUPP-Home.jpg
 
     
   # An image asset can refer to one or more resolution-specific "variants", see

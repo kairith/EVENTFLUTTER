@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'create.dart'; // Import the page to create events
 import 'SectionHeader.dart'; // Import the SectionHeader widget
 import 'EventCard.dart'; // Import the EventCard widget
+import 'UpdateEvent.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   // Event categories
   List<Map<String, String>> featuredEvents = [
     {
+      "id": "1",
       "title": "National Creativity",
       "location": "California, USA",
       "imageUrl": "assets/images/National-Live-Creative-Day.jpg",
@@ -22,11 +24,13 @@ class _HomePageState extends State<HomePage> {
   ];
   List<Map<String, String>> trendingEvents = [
     {
+      "id": "2",
       "title": "Business Party",
       "location": "Mesa, New Jersey",
       "imageUrl": "assets/images/people-excellence.png",
     },
     {
+      "id": "3",
       "title": "Music Festival",
       "location": "Shiloh, Hawaii",
       "imageUrl": "assets/images/MF4-Music-Festival-in-Cambodia.jpg",
@@ -34,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   ];
   List<Map<String, String>> popularEvents = [
     {
+      "id": "4",
       "title": "Art Exhibition",
       "location": "Paris, France",
       "imageUrl": "assets/images/art.jpg",
@@ -53,6 +58,67 @@ class _HomePageState extends State<HomePage> {
       return titleLower.contains(queryLower) ||
           locationLower.contains(queryLower);
     }).toList();
+  }
+
+  // Function to delete an event
+  void deleteEvent(String category, Map<String, String> event) {
+    setState(() {
+      if (category == 'Featured') {
+        featuredEvents.remove(event);
+      } else if (category == 'Trending') {
+        trendingEvents.remove(event);
+      } else if (category == 'Popular') {
+        popularEvents.remove(event);
+      }
+    });
+  }
+
+  // Method to update the event
+  void updateEvent(String category, Map<String, String> updatedEvent) {
+  setState(() {
+    if (category == 'Featured') {
+      final index = featuredEvents.indexWhere((event) => event['id'] == updatedEvent['id']);
+      if (index != -1) {
+        featuredEvents[index] = updatedEvent;
+      }
+    } else if (category == 'Trending') {
+      final index = trendingEvents.indexWhere((event) => event['id'] == updatedEvent['id']);
+      if (index != -1) {
+        trendingEvents[index] = updatedEvent;
+      }
+    } else if (category == 'Popular') {
+      final index = popularEvents.indexWhere((event) => event['id'] == updatedEvent['id']);
+      if (index != -1) {
+        popularEvents[index] = updatedEvent;
+      }
+    }
+  });
+}
+
+  // Method to show confirmation dialog for event deletion
+  void showDeleteConfirmation(String category, Map<String, String> event) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Event'),
+        content: const Text('Are you sure you want to delete this event?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              deleteEvent(category, event);
+              Navigator.pop(context); // Close the dialog
+            },
+            child: const Text('Yes'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog
+            },
+            child: const Text('No'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -130,14 +196,33 @@ class _HomePageState extends State<HomePage> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: filteredEvents.map((event) {
-                    return Container(
-                      margin: const EdgeInsets.only(right: 16.0),
-                      width: 250,
-                      child: EventCard(
-                        imageUrl: event['imageUrl']!,
-                        title: event['title']!,
-                        location: event['location']!,
-                        buttonText: "Book Now",
+                    return GestureDetector(
+                      onLongPress: () {
+                        // Show delete confirmation dialog on long press
+                        showDeleteConfirmation('Featured', event);
+                      },
+                      onTap: () async {
+  final updatedEvent = await Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => UpdateEventPage(
+        eventDetails: event,
+        onUpdate: (updatedEvent) {
+          updateEvent('Featured', updatedEvent); // Update the correct category
+        },
+      ),
+    ),
+  );
+},
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 16.0),
+                        width: 250,
+                        child: EventCard(
+                          imageUrl: event['imageUrl']!,
+                          title: event['title']!,
+                          location: event['location']!,
+                          buttonText: "Book Now",
+                        ),
                       ),
                     );
                   }).toList(),
@@ -175,20 +260,38 @@ class _HomePageState extends State<HomePage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: featuredEvents.map((event) {
-                  return Container(
-                    margin: const EdgeInsets.only(right: 16.0),
-                    width: 250,
-                    child: EventCard(
-                      imageUrl: event['imageUrl']!,
-                      title: event['title']!,
-                      location: event['location']!,
-                      buttonText: "Book Now",
+                  return GestureDetector(
+                    onLongPress: () {
+                      // Show delete confirmation dialog on long press
+                      showDeleteConfirmation('Featured', event);
+                    },
+                    onTap: () async {
+                      final updatedEvent = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateEventPage(
+                            eventDetails: event,
+                            onUpdate: (updatedEvent) {
+                              updateEvent('Featured', updatedEvent);
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 16.0),
+                      width: 250,
+                      child: EventCard(
+                        imageUrl: event['imageUrl']!,
+                        title: event['title']!,
+                        location: event['location']!,
+                        buttonText: "Book Now",
+                      ),
                     ),
                   );
                 }).toList(),
               ),
             ),
-
             const SizedBox(height: 16),
 
             // Trending Events Section
@@ -213,14 +316,33 @@ class _HomePageState extends State<HomePage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: trendingEvents.map((event) {
-                  return Container(
-                    margin: const EdgeInsets.only(right: 16.0),
-                    width: 200,
-                    child: EventCard(
-                      imageUrl: event['imageUrl']!,
-                      title: event['title']!,
-                      location: event['location']!,
-                      buttonText: "Join",
+                  return GestureDetector(
+                    onLongPress: () {
+                      // Show delete confirmation dialog on long press
+                      showDeleteConfirmation('Trending', event);
+                    },
+                    onTap: () async {
+                      final updatedEvent = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateEventPage(
+                            eventDetails: event,
+                            onUpdate: (updatedEvent) {
+                              updateEvent('Trending', updatedEvent);
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 16.0),
+                      width: 200,
+                      child: EventCard(
+                        imageUrl: event['imageUrl']!,
+                        title: event['title']!,
+                        location: event['location']!,
+                        buttonText: "Join",
+                      ),
                     ),
                   );
                 }).toList(),
@@ -245,96 +367,46 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             const SizedBox(height: 10),
-            // Popular events displayed in a Column with circular images
+            // Popular events container
             SizedBox(
-              height: 300,
-              child: ListView.builder(
-                itemCount: popularEvents.length,
-                itemBuilder: (context, index) {
-                  final event = popularEvents[index];
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 16.0),
-                    child: Row(
-                      children: [
-                        ClipOval(
-                          child: Image.asset(
-                            event['imageUrl']!,
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
+              height: 220,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: popularEvents.map((event) {
+                  return GestureDetector(
+                    onLongPress: () {
+                      // Show delete confirmation dialog on long press
+                      showDeleteConfirmation('Popular', event);
+                    },
+                    onTap: () async {
+                      final updatedEvent = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateEventPage(
+                            eventDetails: event,
+                            onUpdate: (updatedEvent) {
+                              updateEvent('Popular', updatedEvent);
+                            },
                           ),
                         ),
-                        const SizedBox(width: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              event['title']!,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              event['location']!,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            ElevatedButton(
-                              onPressed: () {
-                                // Handle action
-                              },
-                              child: const Text("Explore"),
-                            ),
-                          ],
-                        ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 16.0),
+                      width: 250,
+                      child: EventCard(
+                        imageUrl: event['imageUrl']!,
+                        title: event['title']!,
+                        location: event['location']!,
+                        buttonText: "Join",
+                      ),
                     ),
                   );
-                },
+                }).toList(),
               ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final newEvent = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const CreateEventPage()),
-          );
-          if (newEvent != null) {
-            // Add the new event to the Featured, Trending, or Popular list based on its category
-            setState(() {
-              if (newEvent['category'] == 'Featured') {
-                featuredEvents.add({
-                  "title": newEvent['title']!,
-                  "location": newEvent['location']!,
-                  "imageUrl": newEvent['imageUrl']!,
-                });
-              } else if (newEvent['category'] == 'Trending') {
-                trendingEvents.add({
-                  "title": newEvent['title']!,
-                  "location": newEvent['location']!,
-                  "imageUrl": newEvent['imageUrl']!,
-                });
-              } else if (newEvent['category'] == 'Popular') {
-                popularEvents.add({
-                  "title": newEvent['title']!,
-                  "location": newEvent['location']!,
-                  "imageUrl": newEvent['imageUrl']!,
-                });
-              }
-            });
-          }
-        },
-        tooltip: 'Add New Event',
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.add),
       ),
     );
   }
