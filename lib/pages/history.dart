@@ -1,44 +1,44 @@
 import 'package:flutter/material.dart';
-class HistoryPage extends StatelessWidget {
-  final List<Map<String, dynamic>> bookings;
 
-  const HistoryPage({super.key, required this.bookings});
+class HistoryPage extends StatelessWidget {
+  final Map<String, dynamic> bookingDetails;
+
+  const HistoryPage({Key? key, required this.bookingDetails}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Ensure bookingDetails is not null
+    if (bookingDetails.isEmpty || bookingDetails['event'] == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Error')),
+        body: Center(child: const Text('No booking details available.')),
+      );
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Booking History'),
-      ),
-      body: bookings.isEmpty
-          ? const Center(
-              child: Text(
-                'No bookings yet!',
-                style: TextStyle(fontSize: 18),
-              ),
-            )
-          : ListView.builder(
-              itemCount: bookings.length,
-              itemBuilder: (context, index) {
-                final booking = bookings[index];
-                final event = booking['event'] as Map<String, String>;
-                return Card(
-                  margin: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                    title: Text(event['title'] ?? 'Unknown Event'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Location: ${event['location']}'),
-                        Text('Name: ${booking['name']}'),
-                        Text('Email: ${booking['email']}'),
-                        Text('Tickets: ${booking['ticketCount']}'),
-                      ],
-                    ),
-                  ),
-                );
-              },
+      appBar: AppBar(title: const Text('Booking History')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Event: ${bookingDetails['event']['title']}',
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(height: 10),
+            Text('Location: ${bookingDetails['event']['location']}'),
+            const SizedBox(height: 10),
+            Text('Date: ${bookingDetails['event']['date']}'),
+            const SizedBox(height: 10),
+            Text('Name: ${bookingDetails['name']}'),
+            const SizedBox(height: 10),
+            Text('Email: ${bookingDetails['email']}'),
+            const SizedBox(height: 10),
+            Text('Tickets: ${bookingDetails['ticketCount']}'),
+          ],
+        ),
+      ),
     );
   }
 }

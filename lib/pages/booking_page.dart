@@ -1,7 +1,7 @@
 import 'package:eventmanagementsystem/components/CustomBottomNavigationBar.dart';
-import 'package:eventmanagementsystem/pages/History.dart';
 import 'package:flutter/material.dart';
-import 'package:eventmanagementsystem/pages/home_page.dart';
+import 'package:eventmanagementsystem/pages/History.dart'; // Ensure this path is correct
+
 class BookingPage extends StatefulWidget {
   final Map<String, String> event;
 
@@ -18,27 +18,27 @@ class _BookingPageState extends State<BookingPage> {
   int _ticketCount = 1;
 
   void _confirmBooking() {
-  if (_formKey.currentState!.validate()) {
-    _formKey.currentState!.save();
+   // Inside _confirmBooking method in BookingPage
+if (_formKey.currentState!.validate()) {
+  _formKey.currentState!.save();
 
-    // Save the booking details
-    final bookingDetails = {
-      'event': widget.event,
-      'name': _name,
-      'email': _email,
-      'ticketCount': _ticketCount,
-    };
+  // Save the booking details
+  final bookingDetails = {
+    'event': widget.event,
+    'name': _name,
+    'email': _email,
+    'ticketCount': _ticketCount,
+  };
 
-    // Navigate to HistoryPage with the booking details
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => CustomBottomNavigationBar(),
-      ),
-    );
-  }
+  // Navigate to CustomBottomNavigationBar with booking details
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (context) => CustomBottomNavigationBar(bookingDetails: bookingDetails), // Pass booking details
+    ),
+  );
 }
-
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +85,9 @@ class _BookingPageState extends State<BookingPage> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your email';
+                      }
+                      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                        return 'Please enter a valid email';
                       }
                       return null;
                     },
