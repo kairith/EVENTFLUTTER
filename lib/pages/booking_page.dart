@@ -1,6 +1,5 @@
-import 'package:eventmanagementsystem/components/CustomBottomNavigationBar.dart';
 import 'package:flutter/material.dart';
-import 'package:eventmanagementsystem/pages/History.dart'; // Ensure this path is correct
+import 'package:eventmanagementsystem/components/CustomBottomNavigationBar.dart'; // Adjust the import as needed
 
 class BookingPage extends StatefulWidget {
   final Map<String, String> event;
@@ -17,30 +16,34 @@ class _BookingPageState extends State<BookingPage> {
   String _email = '';
   int _ticketCount = 1;
 
+  // List to store booking details
+  final List<Map<String, dynamic>> _bookingDetailsList = [];
+
   void _confirmBooking() {
-   // Inside _confirmBooking method in BookingPage
-if (_formKey.currentState!.validate()) {
-  _formKey.currentState!.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
 
-  // Save the booking details
-  final bookingDetails = {
-    'event': widget.event,
-    'name': _name,
-    'email': _email,
-    'ticketCount': _ticketCount,
-  };
+      final bookingDetails = {
+        'event': widget.event,
+        'name': _name,
+        'email': _email,
+        'ticketCount': _ticketCount,
+      };
 
-  // Navigate to CustomBottomNavigationBar with booking details
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(
-      builder: (context) => CustomBottomNavigationBar(bookingDetails: bookingDetails), // Pass booking details
-    ),
-  );
-}
+      // Add booking to the list
+      _bookingDetailsList.add(bookingDetails);
+
+      // Navigate to CustomBottomNavigationBar with the booking details
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CustomBottomNavigationBar(bookingDetails: _bookingDetailsList), // Pass the list
+        ),
+      );
+    }
   }
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
