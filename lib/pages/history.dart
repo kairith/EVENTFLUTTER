@@ -4,16 +4,14 @@ class HistoryPage extends StatelessWidget {
   final List<Map<String, dynamic>> bookingDetailsList;
 
   const HistoryPage({Key? key, required this.bookingDetailsList}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     if (bookingDetailsList.isEmpty) {
       return Scaffold(
         appBar: AppBar(title: const Text('Booking History')),
-        body: Center(child: const Text('No booking details available.')),
+        body: const Center(child: Text('No booking details available.')),
       );
     }
-
     return Scaffold(
       appBar: AppBar(title: const Text('Booking History')),
       body: ListView.builder(

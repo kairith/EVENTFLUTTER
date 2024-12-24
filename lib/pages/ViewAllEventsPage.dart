@@ -11,6 +11,7 @@ class ViewAllEventsPage extends StatelessWidget {
   });
 
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -26,7 +27,7 @@ class ViewAllEventsPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 final event = events[index];
 
-                // Safely extracting data from the map
+                
                 final title = event["title"] ?? "Untitled Event";
                 final location = event["location"];
                 final date = event["date"];

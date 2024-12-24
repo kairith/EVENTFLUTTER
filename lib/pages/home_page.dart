@@ -12,7 +12,6 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
-
 class _HomePageState extends State<HomePage> {
   // Event categories
   List<Map<String, String>> featuredEvents = [
@@ -160,11 +159,20 @@ class _HomePageState extends State<HomePage> {
 
             const SizedBox(height: 16),
 
-            // Display filtered events if any
             if (filteredEvents.isNotEmpty) ...[
               SectionHeader(
                 title: "Search Results",
-                onViewAll: () {},
+                onViewAll: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EventCategoryPage(
+                        title: "Featured Events",
+                        events: featuredEvents,
+                      ),
+                    ),
+                  );
+                },
               ),
               const SizedBox(height: 10),
               SizedBox(
@@ -228,12 +236,11 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const BookingPage(
+                                  builder: (context) => BookingPage(
                                     event: {
-                                      'title': 'Music Festival',
-                                      'location': 'Central Park',
+                                      'title':event['title']!,
+                                      'location': event['location']!,
                                     },
-                                    
                                   ),
                                 ),
                               );
@@ -328,23 +335,23 @@ class _HomePageState extends State<HomePage> {
                         location: event['location']!,
                         buttonText: "Book Now",
                         onPressed: () {
-                            if ('Book Now' == 'Book Now') {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const BookingPage(
-                                    event: {
-                                      'title': 'Music Festival',
-                                      'location': 'Central Park',
-                                    },
-                                  ),
+                          if ('Book Now' == 'Book Now') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BookingPage(
+                                  event: {
+                                    'title':event['title']!,
+                                      'location': event['location']!,
+                                  },
                                 ),
-                              );
-                            } else if ('Learn More' == 'Learn More') {
-                              print('Learn More action triggered');
-                              // Navigate to an event details page if needed
-                            }
-                          },
+                              ),
+                            );
+                          } else if ('Learn More' == 'Learn More') {
+                            print('Learn More action triggered');
+                            // Navigate to an event details page if needed
+                          }
+                        },
                       ),
                     ),
                   );
@@ -424,23 +431,23 @@ class _HomePageState extends State<HomePage> {
                         location: event['location']!,
                         buttonText: "Join",
                         onPressed: () {
-                            if ('Join' == 'Join') {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const BookingPage(
-                                    event: {
-                                      'title': 'Music Festival',
-                                      'location': 'Central Park',
-                                    },
-                                  ),
+                          if ('Join' == 'Join') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BookingPage(
+                                  event: {
+                                    'title':event['title']!,
+                                      'location': event['location']!,
+                                  },
                                 ),
-                              );
-                            } else if ('Learn More' == 'Learn More') {
-                              print('Learn More action triggered');
-                              // Navigate to an event details page if needed
-                            }
-                          },
+                              ),
+                            );
+                          } else if ('Learn More' == 'Learn More') {
+                            print('Learn More action triggered');
+                            // Navigate to an event details page if needed
+                          }
+                        },
                       ),
                     ),
                   );
@@ -521,23 +528,23 @@ class _HomePageState extends State<HomePage> {
                         location: event['location']!,
                         buttonText: "explore",
                         onPressed: () {
-                            if ('explore' == 'explore') {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const BookingPage(
-                                    event: {
-                                      'title': 'Music Festival',
-                                      'location': 'Central Park',
-                                    },
-                                  ),
+                          if ('explore' == 'explore') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BookingPage(
+                                  event: {
+                                    'title':event['title']!,
+                                      'location': event['location']!,
+                                  },
                                 ),
-                              );
-                            } else if ('Learn More' == 'Learn More') {
-                              print('Learn More action triggered');
-                              // Navigate to an event details page if needed
-                            }
-                          },
+                              ),
+                            );
+                          } else if ('Learn More' == 'Learn More') {
+                            print('Learn More action triggered');
+                            // Navigate to an event details page if needed
+                          }
+                        },
                       ),
                     ),
                   );
