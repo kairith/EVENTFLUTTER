@@ -20,6 +20,8 @@ class _HomePageState extends State<HomePage> {
       "title": "National Creativity",
       "location": "California, USA",
       "imageUrl": "assets/images/National-Live-Creative-Day.jpg",
+      "date": DateTime.now().add(Duration(days: 30)).toIso8601String(),
+      
     },
   ];
   List<Map<String, String>> trendingEvents = [
@@ -28,12 +30,14 @@ class _HomePageState extends State<HomePage> {
       "title": "Business Party",
       "location": "Mesa, New Jersey",
       "imageUrl": "assets/images/people-excellence.png",
+      "date": DateTime.now().add(Duration(days: 30)).toIso8601String(),
     },
     {
       "id": "3",
       "title": "Music Festival",
       "location": "Shiloh, Hawaii",
       "imageUrl": "assets/images/MF4-Music-Festival-in-Cambodia.jpg",
+      "date": DateTime.now().add(Duration(days: 30)).toIso8601String(),
     },
   ];
   List<Map<String, String>> popularEvents = [
@@ -42,6 +46,7 @@ class _HomePageState extends State<HomePage> {
       "title": "Art Exhibition",
       "location": "Paris, France",
       "imageUrl": "assets/images/Art.jpg",
+      "date": DateTime.now().add(Duration(days: 30)).toIso8601String(),
     },
   ];
 
@@ -230,6 +235,7 @@ class _HomePageState extends State<HomePage> {
                           imageUrl: event['imageUrl']!,
                           title: event['title']!,
                           location: event['location']!,
+                          date: DateTime.parse(event['date']!),
                           buttonText: 'Book Now',
                           onPressed: () {
                             if ('Book Now' == 'Book Now') {
@@ -333,6 +339,7 @@ class _HomePageState extends State<HomePage> {
                         imageUrl: event['imageUrl']!,
                         title: event['title']!,
                         location: event['location']!,
+                        date: DateTime.parse(event['date']!),
                         buttonText: "Book Now",
                         onPressed: () {
                           if ('Book Now' == 'Book Now') {
@@ -429,6 +436,7 @@ class _HomePageState extends State<HomePage> {
                         imageUrl: event['imageUrl']!,
                         title: event['title']!,
                         location: event['location']!,
+                        date: DateTime.parse(event['date']!),
                         buttonText: "Join",
                         onPressed: () {
                           if ('Join' == 'Join') {
@@ -526,6 +534,7 @@ class _HomePageState extends State<HomePage> {
                         imageUrl: event['imageUrl']!,
                         title: event['title']!,
                         location: event['location']!,
+                        date: DateTime.parse(event['date']!),
                         buttonText: "explore",
                         onPressed: () {
                           if ('explore' == 'explore') {
@@ -555,45 +564,46 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final newEvent = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const CreateEventPage()),
-          );
-          if (newEvent != null) {
-            // Add the new event to the Featured, Trending, or Popular list based on its category
-            setState(() {
-              if (newEvent['category'] == 'Featured') {
-                featuredEvents.add({
-                  "id": DateTime.now()
-                      .millisecondsSinceEpoch
-                      .toString(), // Generate a new ID
-                  "title": newEvent['title']!,
-                  "location": newEvent['location']!,
-                  "imageUrl": newEvent['imageUrl']!,
-                });
-              } else if (newEvent['category'] == 'Trending') {
-                trendingEvents.add({
-                  "id": DateTime.now().millisecondsSinceEpoch.toString(),
-                  "title": newEvent['title']!,
-                  "location": newEvent['location']!,
-                  "imageUrl": newEvent['imageUrl']!,
-                });
-              } else if (newEvent['category'] == 'Popular') {
-                popularEvents.add({
-                  "id": DateTime.now().millisecondsSinceEpoch.toString(),
-                  "title": newEvent['title']!,
-                  "location": newEvent['location']!,
-                  "imageUrl": newEvent['imageUrl']!,
-                });
-              }
-            });
-          }
-        },
-        tooltip: 'Add New Event',
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.add),
-      ),
+  onPressed: () async {
+    final newEvent = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const CreateEventPage()),
+    );
+    if (newEvent != null) { // Ensure newEvent is not null
+      setState(() {
+        // Add the new event to the corresponding category
+        if (newEvent['category'] == 'Featured') {
+          featuredEvents.add({
+            "id": DateTime.now().millisecondsSinceEpoch.toString(),
+            "title": newEvent['title']!,
+            "location": newEvent['location']!,
+            "imageUrl": newEvent['imageUrl']!,
+            "date": newEvent['date'], // Ensure date is added
+          });
+        } else if (newEvent['category'] == 'Trending') {
+          trendingEvents.add({
+            "id": DateTime.now().millisecondsSinceEpoch.toString(),
+            "title": newEvent['title']!,
+            "location": newEvent['location']!,
+            "imageUrl": newEvent['imageUrl']!,
+            "date": newEvent['date'], // Ensure date is added
+          });
+        } else if (newEvent['category'] == 'Popular') {
+          popularEvents.add({
+            "id": DateTime.now().millisecondsSinceEpoch.toString(),
+            "title": newEvent['title']!,
+            "location": newEvent['location']!,
+            "imageUrl": newEvent['imageUrl']!,
+            "date": newEvent['date'], // Ensure date is added
+          });
+        }
+      });
+    }
+  },
+  tooltip: 'Add New Event',
+  backgroundColor: Colors.blue,
+  child: const Icon(Icons.add),
+),
     );
   }
 }

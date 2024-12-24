@@ -6,6 +6,7 @@ class EventCard extends StatelessWidget {
   final String location;
   final String buttonText;
   final VoidCallback onPressed; // Added callback for button action
+  final DateTime date; // Added date parameter
 
   const EventCard({
     required this.imageUrl,
@@ -13,6 +14,7 @@ class EventCard extends StatelessWidget {
     required this.location,
     required this.buttonText,
     required this.onPressed, // Made onPressed a required parameter
+    required this.date, // Make date a required parameter
     super.key,
   });
 
@@ -51,6 +53,15 @@ class EventCard extends StatelessWidget {
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  // Format the date as desired
+                  "${date.toLocal()}".split(' ')[0], // Display date in YYYY-MM-DD format
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
                   ),
                 ),
                 const SizedBox(height: 8),

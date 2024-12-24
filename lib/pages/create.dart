@@ -1,8 +1,6 @@
 import 'package:eventmanagementsystem/pages/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:eventmanagementsystem/pages/create.dart';
 import 'package:eventmanagementsystem/model/event_model.dart'; // Import the enum
-import 'home_page.dart';
 import 'package:image_picker/image_picker.dart';
 
 enum EventCategory { Featured, Trending, Popular }
@@ -34,6 +32,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
   String title = '';
   String location = '';
   String imageUrl = '';
+  DateTime? eventDate; // Changed to nullable
   EventCategory selectedCategory = EventCategory.Featured; // Default category
 
   final List<String> imageUrls = [
@@ -45,7 +44,29 @@ class _CreateEventPageState extends State<CreateEventPage> {
     "assets/images/AUPP-Home.jpg",
     "assets/images/CADT_location.jpg"
   ];
+
   final List<EventCategory> categories = EventCategory.values;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: eventDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      setState(() {
+        eventDate = picked; // Set the picked date
+      });
+    }
+  }
+
+  void _clearDate() {
+    setState(() {
+      eventDate = null; // Clear the date
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,6 +109,34 @@ class _CreateEventPageState extends State<CreateEventPage> {
                   }
                   return null;
                 },
+              ),
+
+              const SizedBox(height: 16),
+
+              // Event Date Picker
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    eventDate != null 
+                      ? "Date: ${eventDate!.toLocal().toString().split(' ')[0]}"
+                      : "No date selected",
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  Row(
+                    children: [
+                      TextButton(
+                        onPressed: () => _selectDate(context),
+                        child: const Text('Select Date'),
+                      ),
+                      if (eventDate != null) // Show clear button only if date is selected
+                        TextButton(
+                          onPressed: _clearDate,
+                          child: const Text('Clear Date'),
+                        ),
+                    ],
+                  ),
+                ],
               ),
 
               const SizedBox(height: 16),
@@ -151,9 +200,10 @@ class _CreateEventPageState extends State<CreateEventPage> {
                       "title": title,
                       "location": location,
                       "imageUrl": imageUrl,
+                      "date": eventDate != null ? eventDate!.toIso8601String() : null, // Handle null date
                       "category": selectedCategory.name,  // Add category to event
                     };
-                    Navigator.pop(context, newEvent);
+                    Navigator.pop(context, newEvent); // Ensure this returns the new event
                   }
                 },
                 child: const Text('Save Event'),

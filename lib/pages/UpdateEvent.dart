@@ -18,6 +18,7 @@ class _UpdateEventPageState extends State<UpdateEventPage> {
   late TextEditingController titleController;
   late TextEditingController locationController;
   String? selectedImageUrl;
+  DateTime? selectedDate; // Variable to hold the selected date
 
   final List<String> imageUrls = [
     "assets/images/National-Live-Creative-Day.jpg",
@@ -29,12 +30,28 @@ class _UpdateEventPageState extends State<UpdateEventPage> {
     "assets/images/CADT_location.jpg",
     "assets/images/Art.jpg",
   ];
+
   @override
   void initState() {
     super.initState();
     titleController = TextEditingController(text: widget.eventDetails['title']);
     locationController = TextEditingController(text: widget.eventDetails['location']);
-    selectedImageUrl = widget.eventDetails['imageUrl']; // Initialize with current image URL
+    selectedImageUrl = widget.eventDetails['imageUrl'];
+    selectedDate = DateTime.parse(widget.eventDetails['date']!);// Initialize with current date
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked; // Update the selected date
+      });
+    }
   }
 
   @override
@@ -56,6 +73,25 @@ class _UpdateEventPageState extends State<UpdateEventPage> {
               decoration: const InputDecoration(labelText: "Event Location"),
             ),
             const SizedBox(height: 20),
+
+            // Event Date Picker
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  selectedDate != null 
+                    ? "Date: ${selectedDate!.toLocal().toString().split(' ')[0]}"
+                    : "No date selected",
+                  style: const TextStyle(fontSize: 16),
+                ),
+                TextButton(
+                  onPressed: () => _selectDate(context),
+                  child: const Text('Select Date'),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+
             // Dropdown for selecting an image
             DropdownButton<String>(
               value: selectedImageUrl,
@@ -80,6 +116,7 @@ class _UpdateEventPageState extends State<UpdateEventPage> {
               }).toList(),
             ),
             const SizedBox(height: 20),
+
             ElevatedButton(
               onPressed: () {
                 final updatedEvent = {
@@ -87,6 +124,7 @@ class _UpdateEventPageState extends State<UpdateEventPage> {
                   "title": titleController.text,
                   "location": locationController.text,
                   "imageUrl": selectedImageUrl!, // Use the selected image URL
+                  "date": selectedDate?.toIso8601String() ?? "", // Ensure non-null value
                 };
 
                 widget.onUpdate(updatedEvent); // Call the update function
