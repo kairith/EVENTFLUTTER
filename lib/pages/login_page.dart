@@ -12,12 +12,14 @@ class LoginPage extends StatelessWidget {
   // text editing controllers
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final emailController = TextEditingController();
 
   // sign user in method
   void signUserIn(BuildContext context) {
     // Sample credentials for validation
     const correctUsername = "admin";
     const correctPassword = "rith1122*";
+    // const emailaddress = "kairith12@gmail.com";
 
     if (usernameController.text == correctUsername &&
         passwordController.text == correctPassword) {
@@ -74,6 +76,7 @@ class LoginPage extends StatelessWidget {
                 // username textfield
                 MyTextField(
                   controller: usernameController,
+                  
                   hintText: 'Username',
                   obscureText: false,
                 ),

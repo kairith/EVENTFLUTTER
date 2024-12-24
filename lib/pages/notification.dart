@@ -13,12 +13,39 @@ class _NotificationsPageState extends State<NotificationsPage> {
     {"title": "New Event Added", "description": "Don't miss 'Tech Expo' next week!"},
   ];
 
+  Map<String, String>? _lastDeletedNotification;
+  int? _lastDeletedIndex;
+
   void deleteNotification(int index) {
     setState(() {
+      _lastDeletedNotification = notifications[index];
+      _lastDeletedIndex = index;
       notifications.removeAt(index);
     });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Notification deleted."),
+        action: SnackBarAction(
+          label: "Undo",
+          onPressed: () {
+            restoreNotification();
+          },
+        ),
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 
+  void restoreNotification() {
+    if (_lastDeletedNotification != null && _lastDeletedIndex != null) {
+      setState(() {
+        notifications.insert(_lastDeletedIndex!, _lastDeletedNotification!);
+        _lastDeletedNotification = null;
+        _lastDeletedIndex = null;
+      });
+    }
+  }
   void reorderNotifications(int oldIndex, int newIndex) {
     setState(() {
       if (newIndex > oldIndex) {
@@ -40,7 +67,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
               icon: const Icon(Icons.delete_forever),
               onPressed: () {
                 setState(() {
-                  notifications.clear(); // Clear all notifications
+                  notifications.clear();
                 });
               },
             ),
@@ -69,20 +96,31 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   ),
                   onDismissed: (direction) {
                     deleteNotification(index);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Notification deleted."),
-                        duration: const Duration(seconds: 2),
-                      ),
-                    );
                   },
-                  child: ListTile(
-                    leading: const Icon(Icons.notifications),
-                    title: Text(notification["title"]!),
-                    subtitle: Text(notification["description"]!),
-                    onTap: () {
-                      // Handle tap action (navigate or show details)
-                    },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: ListTile(
+                      leading: const Icon(Icons.notifications, color: Colors.blue),
+                      title: Text(
+                        notification["title"]!,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(notification["description"]!),
+                      onTap: () {
+                        // Handle tap action (navigate or show details)
+                      },
+                    ),
                   ),
                 );
               },

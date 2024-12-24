@@ -35,7 +35,6 @@ class HistoryPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
                 Text(
                   'Event: ${bookingDetails['event']['title']}',
                   style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
