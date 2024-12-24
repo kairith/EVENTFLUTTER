@@ -20,29 +20,43 @@ class _BookingPageState extends State<BookingPage> {
   final List<Map<String, dynamic>> _bookingDetailsList = [];
 
   void _confirmBooking() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
+  if (_formKey.currentState!.validate()) {
+    _formKey.currentState!.save();
 
-      final bookingDetails = {
-        'event': widget.event,
-        'name': _name,
-        'email': _email,
-        'ticketCount': _ticketCount,
-      };
+    // Debugging: Print event details to ensure they are not null
+    print('Event Details: ${widget.event}');
 
-      // Add booking to the list
-      _bookingDetailsList.add(bookingDetails);
+    // Capture the current date as the booking date
+    final currentBookingDate = DateTime.now(); // Current date and time
 
-      // Navigate to CustomBottomNavigationBar with the booking details
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => CustomBottomNavigationBar(bookingDetails: _bookingDetailsList), // Pass the list
+    final bookingDetails = {
+      'event': {
+        'title': widget.event['title'],
+        'location': widget.event['location'],
+        'date': widget.event['date'], // Ensure this is not null
+      },
+      'bookingDate': currentBookingDate, // Current date as booking date
+      'name': _name, // User's name
+      'email': _email, // User's email
+      'ticketCount': _ticketCount, // Number of tickets booked
+    };
+
+   
+
+    // Add booking to the list
+    _bookingDetailsList.add(bookingDetails);
+
+    // Navigate to CustomBottomNavigationBar with the booking details
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CustomBottomNavigationBar(
+          bookingDetails: _bookingDetailsList, // Pass the list
         ),
-      );
-    }
+      ),
+    );
   }
-
+}
    @override
   Widget build(BuildContext context) {
     return Scaffold(

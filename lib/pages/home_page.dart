@@ -12,6 +12,7 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
+
 class _HomePageState extends State<HomePage> {
   // Event categories
   List<Map<String, String>> featuredEvents = [
@@ -21,7 +22,6 @@ class _HomePageState extends State<HomePage> {
       "location": "California, USA",
       "imageUrl": "assets/images/National-Live-Creative-Day.jpg",
       "date": DateTime.now().add(Duration(days: 30)).toIso8601String(),
-      
     },
   ];
   List<Map<String, String>> trendingEvents = [
@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
         _filterEvents(searchController.text);
 
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: const Color.fromARGB(255, 202, 212, 218),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(16.0),
@@ -244,7 +244,7 @@ class _HomePageState extends State<HomePage> {
                                 MaterialPageRoute(
                                   builder: (context) => BookingPage(
                                     event: {
-                                      'title':event['title']!,
+                                      'title': event['title']!,
                                       'location': event['location']!,
                                     },
                                   ),
@@ -348,8 +348,8 @@ class _HomePageState extends State<HomePage> {
                               MaterialPageRoute(
                                 builder: (context) => BookingPage(
                                   event: {
-                                    'title':event['title']!,
-                                      'location': event['location']!,
+                                    'title': event['title']!,
+                                    'location': event['location']!,
                                   },
                                 ),
                               ),
@@ -445,8 +445,8 @@ class _HomePageState extends State<HomePage> {
                               MaterialPageRoute(
                                 builder: (context) => BookingPage(
                                   event: {
-                                    'title':event['title']!,
-                                      'location': event['location']!,
+                                    'title': event['title']!,
+                                    'location': event['location']!,
                                   },
                                 ),
                               ),
@@ -543,8 +543,8 @@ class _HomePageState extends State<HomePage> {
                               MaterialPageRoute(
                                 builder: (context) => BookingPage(
                                   event: {
-                                    'title':event['title']!,
-                                      'location': event['location']!,
+                                    'title': event['title']!,
+                                    'location': event['location']!,
                                   },
                                 ),
                               ),
@@ -564,46 +564,47 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-  onPressed: () async {
-    final newEvent = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CreateEventPage()),
-    );
-    if (newEvent != null) { // Ensure newEvent is not null
-      setState(() {
-        // Add the new event to the corresponding category
-        if (newEvent['category'] == 'Featured') {
-          featuredEvents.add({
-            "id": DateTime.now().millisecondsSinceEpoch.toString(),
-            "title": newEvent['title']!,
-            "location": newEvent['location']!,
-            "imageUrl": newEvent['imageUrl']!,
-            "date": newEvent['date'], // Ensure date is added
-          });
-        } else if (newEvent['category'] == 'Trending') {
-          trendingEvents.add({
-            "id": DateTime.now().millisecondsSinceEpoch.toString(),
-            "title": newEvent['title']!,
-            "location": newEvent['location']!,
-            "imageUrl": newEvent['imageUrl']!,
-            "date": newEvent['date'], // Ensure date is added
-          });
-        } else if (newEvent['category'] == 'Popular') {
-          popularEvents.add({
-            "id": DateTime.now().millisecondsSinceEpoch.toString(),
-            "title": newEvent['title']!,
-            "location": newEvent['location']!,
-            "imageUrl": newEvent['imageUrl']!,
-            "date": newEvent['date'], // Ensure date is added
-          });
-        }
-      });
-    }
-  },
-  tooltip: 'Add New Event',
-  backgroundColor: Colors.blue,
-  child: const Icon(Icons.add),
-),
+        onPressed: () async {
+          final newEvent = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CreateEventPage()),
+          );
+          if (newEvent != null) {
+            // Ensure newEvent is not null
+            setState(() {
+              // Add the new event to the corresponding category
+              if (newEvent['category'] == 'Featured') {
+                featuredEvents.add({
+                  "id": DateTime.now().millisecondsSinceEpoch.toString(),
+                  "title": newEvent['title']!,
+                  "location": newEvent['location']!,
+                  "imageUrl": newEvent['imageUrl']!,
+                  "date": newEvent['date'], // Ensure date is added
+                });
+              } else if (newEvent['category'] == 'Trending') {
+                trendingEvents.add({
+                  "id": DateTime.now().millisecondsSinceEpoch.toString(),
+                  "title": newEvent['title']!,
+                  "location": newEvent['location']!,
+                  "imageUrl": newEvent['imageUrl']!,
+                  "date": newEvent['date'], // Ensure date is added
+                });
+              } else if (newEvent['category'] == 'Popular') {
+                popularEvents.add({
+                  "id": DateTime.now().millisecondsSinceEpoch.toString(),
+                  "title": newEvent['title']!,
+                  "location": newEvent['location']!,
+                  "imageUrl": newEvent['imageUrl']!,
+                  "date": newEvent['date'], // Ensure date is added
+                });
+              }
+            });
+          }
+        },
+        tooltip: 'Add New Event',
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

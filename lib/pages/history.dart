@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class HistoryPage extends StatelessWidget {
   final List<Map<String, dynamic>> bookingDetailsList;
 
-  const HistoryPage({Key? key, required this.bookingDetailsList}) : super(key: key);
+  const HistoryPage({Key? key, required this.bookingDetailsList})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     if (bookingDetailsList.isEmpty) {
@@ -37,14 +39,17 @@ class HistoryPage extends StatelessWidget {
               children: [
                 Text(
                   'Event: ${bookingDetails['event']['title']}',
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
-                const Text('Booking Successfully'),
+                const Text('Booking Successfully',
+                    style: TextStyle(fontSize: 18)),
                 const SizedBox(height: 10),
                 Text('Location: ${bookingDetails['event']['location']}'),
                 const SizedBox(height: 10),
-                Text('Date: ${bookingDetails['event']['date']}'),
+                Text(
+                    'Date of Booking: ${bookingDetails['bookingDate'] ?? 'Not specified'}'),
                 const SizedBox(height: 10),
                 Text('Name: ${bookingDetails['name']}'),
                 const SizedBox(height: 10),
