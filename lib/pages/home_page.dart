@@ -64,7 +64,6 @@ class _HomePageState extends State<HomePage> {
           locationLower.contains(queryLower);
     }).toList();
   }
-
   // Function to delete an event
   void deleteEvent(String category, Map<String, String> event) {
     setState(() {
@@ -79,6 +78,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Function to handle event update
+
+
   void updateEvent(String category, Map<String, String> updatedEvent) {
     setState(() {
       if (category == 'Featured') {
@@ -231,6 +232,7 @@ class _HomePageState extends State<HomePage> {
                       child: Container(
                         margin: const EdgeInsets.only(right: 16.0),
                         width: 250,
+                        
                         child: EventCard(
                           imageUrl: event['imageUrl']!,
                           title: event['title']!,

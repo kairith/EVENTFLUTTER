@@ -1,7 +1,6 @@
 class Booking{
-  final id;
+  final booking_id;
   final String? name;
   final String? email;
-  final String? phone;
-  Booking({required this.id, this.name, this.email, this.phone});
+  Booking({required this.booking_id, this.name, this.email});
 }

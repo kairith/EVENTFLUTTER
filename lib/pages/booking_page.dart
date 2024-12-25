@@ -1,3 +1,4 @@
+import 'package:eventmanagementsystem/database/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:eventmanagementsystem/components/CustomBottomNavigationBar.dart'; // Adjust the import as needed
 
@@ -19,12 +20,12 @@ class _BookingPageState extends State<BookingPage> {
   // List to store booking details
   final List<Map<String, dynamic>> _bookingDetailsList = [];
 
-  void _confirmBooking() {
+void _confirmBooking() {
   if (_formKey.currentState!.validate()) {
     _formKey.currentState!.save();
 
     // Debugging: Print event details to ensure they are not null
-    print('Event Details: ${widget.event}');
+  
 
     // Capture the current date as the booking date
     final currentBookingDate = DateTime.now(); // Current date and time
@@ -41,23 +42,24 @@ class _BookingPageState extends State<BookingPage> {
       'ticketCount': _ticketCount, // Number of tickets booked
     };
 
-   
-
     // Add booking to the list
     _bookingDetailsList.add(bookingDetails);
 
-    // Navigate to CustomBottomNavigationBar with the booking details
+    // Navigate to CustomBottomNavigationBar, passing available events and bookings
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => CustomBottomNavigationBar(
-          bookingDetails: _bookingDetailsList, // Pass the list
+          bookingDetails: _bookingDetailsList,
         ),
       ),
     );
   }
 }
-   @override
+
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -150,6 +152,7 @@ class _BookingPageState extends State<BookingPage> {
                   ElevatedButton(
                     onPressed: _confirmBooking,
                     child: const Text('Book Now'),
+                    
                   ),
                 ],
               ),

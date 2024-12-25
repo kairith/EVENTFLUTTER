@@ -5,6 +5,7 @@ import 'package:eventmanagementsystem/pages/home_page.dart';
 import 'package:eventmanagementsystem/pages/notification.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
+  
   final List<Map<String, dynamic>>? bookingDetails; // Change to a list
 
   const CustomBottomNavigationBar({super.key, this.bookingDetails});
@@ -23,7 +24,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   @override
   void initState() {
     super.initState();
-    // Initialize pages, passing booking details to HistoryPage
     _pages = [
       const HomePage(),
       NotificationsPage(),
@@ -33,6 +33,20 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   }
 
   @override
+/*************  ✨ Codeium Command ⭐  *************/
+  /// Builds the CustomBottomNavigationBar widget.
+  ///
+  /// This widget displays a bottom navigation bar with four items: Home,
+  /// Notifications, History, and Profile. The currently selected item is
+  /// determined by the `_currentIndex` state variable.
+  ///
+  /// The `IndexedStack` widget is used to display the currently selected page.
+  /// The `BottomNavigationBar` widget is used to display the navigation bar
+  /// items.
+  ///
+  /// The `onTap` callback is used to update the `_currentIndex` state variable
+  /// when a navigation bar item is tapped.
+/******  03807044-0187-4169-9b21-1d43b169ff8d  *******/
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(

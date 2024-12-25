@@ -52,6 +52,7 @@ class EventCard extends StatelessWidget {
                   location,
                   style: const TextStyle(
                     color: Colors.white,
+                    fontWeight: FontWeight.bold,
                     fontSize: 14,
                   ),
                 ),
@@ -60,8 +61,9 @@ class EventCard extends StatelessWidget {
                   // Format the date as desired
                   "${date.toLocal()}".split(' ')[0], // Display date in YYYY-MM-DD format
                   style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
+                    color: Color.fromARGB(255, 244, 227, 41),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
                   ),
                 ),
                 const SizedBox(height: 8),

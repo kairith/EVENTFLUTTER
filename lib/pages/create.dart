@@ -1,3 +1,4 @@
+import 'package:eventmanagementsystem/database/database_helper.dart';
 import 'package:eventmanagementsystem/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:eventmanagementsystem/model/event_model.dart'; // Import the enum
@@ -60,6 +61,19 @@ class _CreateEventPageState extends State<CreateEventPage> {
       });
     }
   }
+  
+  void createEvent() async {
+  // Sample event data
+  Map<String, dynamic> eventData = {
+    'title': 'Sample Event',
+    'location': 'New York',
+    'date': '2024-12-25',
+  };
+
+  // Insert event into the database
+  int eventId = await DatabaseHelper.instance.insertEvent(eventData);
+  print('Event created with ID: $eventId');
+}
 
   void _clearDate() {
     setState(() {
